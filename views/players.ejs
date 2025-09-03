@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Players</title>
+</head>
+<body>
+    <h1>Welcome to the players page! See below for current list of players selected:</h1>
+        <% players.forEach((player)=> {%>
+            <ul>
+                <li><a href="./players/<%=player.id%>">Name: <%=player.name%></a></li>
+                <ul>
+                    <li>Position: <%=player.position%></li>
+                    <li>Number: <%=player.number%></li>
+                </ul>
+            <% }) %>
+            </ul>
+    <a href="http://localhost:3000/">Return to main page</a>
+    <a href="http://localhost:3000/players/new">Add player</a>
+    
+
+</body>
+</html>
