@@ -4,6 +4,8 @@ const mongoose = require("mongoose")
 const dotenv= require("dotenv")
 const Player = require("./models/player")
 dotenv.config()
+const methodOverride = require("method-override")
+const morgan = require("morgan")
 
 //constants
 const PORT = 3000
@@ -13,6 +15,8 @@ const app = express()
 
 //add middleware
 app.use(express.urlencoded({ extended: false }))
+app.use(methodOverride("_method"))
+app.use(morgan("dev"))
 
 //connect to database
 const connect = async ()=> {
@@ -29,7 +33,7 @@ connect()
 
 app.get(`/players`, async (req,res)=> {
     const allPlayers = await Player.find()
-    console.log(allPlayers)
+    // console.log(allPlayers)
     res.render("./players.ejs",{players:allPlayers})
 })
 
@@ -50,13 +54,24 @@ app.get(`/players/:id`,async (req,res)=> {
     res.render("./show.ejs",{player:foundId})
 })
 
-app.get(`/players/:id/edit`,(req,res)=> {
-    res.render("index.ejs")
+app.get(`/players/:id/edit`,async (req,res)=> {
+    const foundPlayer = await Player.findById(req.params.id) 
+    // console.log(foundPlayer)
+    res.render("./edit.ejs",{
+        player: foundPlayer
+    })
 })
 
-//put NEED TO CODE
+app.put(`/players/:id`, async (req,res)=> {
+    await Player.findByIdAndUpdate(req.params.id,req.body)
+    // console.log(req.body)
+    res.redirect(`/players/${req.params.id}`)
+})
 
-//delete NEED TO CODE
+app.delete(`/players/:id`, async (req,res)=> {
+    await Player.findByIdAndDelete(req.params.id)
+    res.redirect(`/players`)
+})
 
 
 //listen

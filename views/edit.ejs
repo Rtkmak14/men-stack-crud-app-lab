@@ -6,6 +6,27 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Welcome to the index!</h1>
+    <h1>Welcome! Use this page to edit a player!</h1>
+
+    <form action="http://localhost:3000/players/<%= player._id %>?_method=PUT" method="POST">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="<%=player.name%>"/>
+        <label for="position">Position:</label>
+        <input type="text" id="position" name="position" value="<%=player.position%>"/>
+        <label for="number">Number:</label>
+        <input type="text" id="number" name="number" value="<%=player.number%>"/>
+
+        <button type="submit">Submit Updates</button>
+    </form>
+
+    <form action="http://localhost:3000/players/<%= player._id %>?_method=DELETE" method="POST">
+        <button type="submit">Delete Player</button>
+    </form>
+
+
+    <a href="http://localhost:3000/">Return to main page</a>
+    <a href="http://localhost:3000/players">Return to player list</a>
+    
+    
 </body>
 </html>
